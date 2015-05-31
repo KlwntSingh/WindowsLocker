@@ -1,0 +1,21 @@
+{
+    "name": "Windows-Locker",
+    "version": "1.0.0",
+    "main": "index.html",
+    "single-instance": true,
+    "node-remote": "<local>",
+    "window": {
+        "title": "Windows Locker",
+        "icon": "paxcom-128.png",
+        "position": "center",
+        "min_width": 1024,
+        "min_height": 600,
+        "toolbar": true,
+        "width": 1362,
+        "height": 768
+    },
+    "webkit": {
+        "plugin": true
+    }
+}
+
