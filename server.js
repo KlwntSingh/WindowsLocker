@@ -1,10 +1,18 @@
 var express = require('express');
-var shell = require('shelljs');
-var logger = require('./logger.js');
-var exec = require('child_process').exec;
+var bodyParser = require('body-parser');
+var random = require('randomstring');
+
+var logger = require('./server/logger.js');
+var auth = require('./server/auth.js');
+var osChangeStateFactory = require('./server/osChangeStateFactory.js');
+var ChangeState = osChangeStateFactory.osChangeStateFactory();
+
+
+var sessionToken = random.generate();
 
 var app = express();
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 var logger_debug_old = logger.debug;
 logger.debug = function (msg) {
@@ -51,19 +59,44 @@ process.on('uncaughtException', function (err) {
     }
 });
 
+logger.debug('server starts listening');
+
+// base url
 app.get('/',function(req,res){
-	logger.debug('simple');
-res.send('kulwantsingh');
+	logger.debug('base Url Hit');
+	logger.debug('request from '+req.connection.remoteAddress);
+	var data = {
+		'username' : req.body.username
+	}
+	var dataToSend = {
+		'token' : ''
+	}
+	
+	if(auth.checkUser(data))
+			dataToSend.token = sessionToken;
+	
+	//token is always sent but if not authenticated just sends empty token
+	res.send(dataToSend);
+	
 });
 
 app.get('/lock',function(req,res){
-	logger.debug('main');
-	exec('Rundll32.exe User32.dll,LockWorkStation', function (error, stdout, stderr) {
+	logger.debug('changeState Hit');
+	logger.debug('change State request from '+req.connection.remoteAddress);
+	if(auth.checkAuthentication)
+		ChangeState.ChangeState.lock(res);
+	else 
+	{
+		var dataToSend = {
+			'status' : 'fail',
+			'msg' : 'you are not authenticated'
+		}
+		res.send(dataToSend);
+	}
   // output is in stdout
 });
 
-});
 
-app.listen(3000,function(){
-console.log("App Started on PORT 3000");
+app.listen(1357,function(){
+	console.log("App Started on PORT 1357");
 });

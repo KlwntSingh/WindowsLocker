@@ -3,18 +3,15 @@
     "version": "1.0.0",
     "main": "index.html",
     "single-instance": true,
-    "node-remote": "<local>",
     "window": {
         "title": "Windows Locker",
         "position": "center",
         "min_width": 1024,
         "min_height": 600,
-        "toolbar": true,
+        "toolbar": false,
         "width": 1362,
-        "height": 768
-    },
-    "webkit": {
-        "plugin": true
+        "height": 768,
+		"as_desktop" : true
     }
 }
 
