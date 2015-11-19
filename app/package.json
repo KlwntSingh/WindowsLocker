@@ -1,0 +1,20 @@
+{
+    "name": "OS-Locker",
+    "version": "1.0.0",
+    "main": "index.html",
+    "single-instance": true,
+    "window": {
+        "title": "OS Locker",
+        "position": "center",
+        "min_width": 1024,
+        "min_height": 600,
+        "toolbar": false,
+        "width": 600,
+        "height": 500,
+	"as_desktop" : true
+    },
+        "webkit": {
+        "plugin": true
+    }
+}
+

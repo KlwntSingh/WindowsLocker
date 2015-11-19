@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title>OS Locker</title>
+<!--
+	Notes about making the text fit nicely to your bar code.
+	1. Specify textxalign=center or textxalign=justify.
+	2. Specify the text as the alttext to bypass the built-in formatting.
+	3. If you specify textyalign=above and text has descenders (characters: gjpqy_|,; )
+	   specify textyoffset=1
+-->
+<style type="text/css">
+#menu th {
+	text-align:			right;
+	padding-right:		1.5ex;
+}
+#menu span.button {
+	border:				1px solid #000;
+	background-color:	#eee;
+	display:			inline-block;
+	height:				9px;
+	width:				15px;
+	position:			relative;
+	background-repeat:	no-repeat;
+	background-position:50% 50%;
+}
+#menu span.button.up {
+	top:				-5px;
+	left:				-5px;
+	background-image:	url(lib/up-arrow.gif);
+}
+#menu span.button.dn {
+	top:				6px;
+	left:				-26px;
+	background-image:	url(lib/dn-arrow.gif);
+}
+#menu span.button:hover {
+	background-color:	gold;
+	border:				1px solid orange;
+}
+#scale {
+	height:				16px;
+	width:				3ex;
+}
+</style>
+<script type="text/javascript" src="conf.js"></script>
+<script type="text/javascript" src="bwip.js"></script>
+<script type="text/javascript" src="lib/jquery-1.4.1.js"></script>
+<script type="text/javascript" src="lib/symdesc.js"></script>
+<script type="text/javascript" src="lib/needyoffset.js"></script>
+<script type="text/javascript" src="lib/canvas.js"></script>
+<script type="text/javascript" src="lib/canvas.js"></script>
+<script type="text/javascript" src="bwipp/qrcode.js"></script>
+<script>
+$(document).ready(function() {
+	var ip = "127.0.0.1";
+	jQuery.ajax({
+		url: 'getIP',
+		type: 'GET',
+		dataType: 'JSON',
+		async:true,
+		success: function(data){
+			ip = JSON.parse(data).ip;
+			render(ip);
+		}
+	});
+});
+
+function render(ip) {
+
+	ip = "http://"+ip+":"+conf.port+"/home";
+	var elt = { sym:"qrcode",desc:"QR Code",text:ip,opts:"eclevel=M" };
+	var text = ip.replace(/^\s+/,'').replace(/\s+$/,'');
+	var altx = ''.replace(/^\s+/,'').replace(/\s+$/,'');
+	var opts = elt.opts;
+
+	var bw = new BWIPJS;
+
+	// Convert the options to a dictionary object, so we can pass alttext with
+	// spaces.
+	var tmp = opts.split(' '); 
+	opts = {};
+	for (var i = 0; i < tmp.length; i++) {
+		if (!tmp[i])
+			continue;
+		var eq = tmp[i].indexOf('=');
+		if (eq == -1)
+			opts[tmp[i]] = bw.value(true);
+		else
+			opts[tmp[i].substr(0, eq)] = bw.value(tmp[i].substr(eq+1));
+	}
+	console.log(bw);
+	// Add the alternate text
+	if (altx)
+		opts.alttext = bw.value(altx);
+
+	// Add any hard-coded options required to fix problems in the javascript
+	// emulation. 
+	opts.inkspread = bw.value(0);
+	opts.textyoffset = bw.value(-10);
+	
+	var rot  = 'N';
+	
+	bw.bitmap(new Bitmap);
+	
+	var scl = 7;
+	bw.scale(scl,scl);
+
+	bw.push(text);
+	bw.push(opts);
+
+	bw.call(elt.sym);
+	bw.bitmap().show('canvas', rot);
+	console.log(bw);
+}
+</script>
+</head><body>
+<canvas id="canvas" width=1 height=1 style="border:1px solid #fff;"></canvas>
+</body>
+</html>

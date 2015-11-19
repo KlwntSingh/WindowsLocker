@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style type="text/css">
+#menu th {
+	text-align:			right;
+	padding-right:		1.5ex;
+}
+#menu span.button {
+	border:				1px solid #000;
+	background-color:	#eee;
+	display:			inline-block;
+	height:				9px;
+	width:				15px;
+	position:			relative;
+	background-repeat:	no-repeat;
+	background-position:50% 50%;
+}
+#menu span.button.up {
+	top:				-5px;
+	left:				-5px;
+	background-image:	url(lib/up-arrow.gif);
+}
+#menu span.button.dn {
+	top:				6px;
+	left:				-26px;
+	background-image:	url(lib/dn-arrow.gif);
+}
+#menu span.button:hover {
+	background-color:	gold;
+	border:				1px solid orange;
+}
+#scale {
+	height:				16px;
+	width:				3ex;
+}
+</style>
+<script type="text/javascript" src="/lib/jquery-1.4.1.js"></script>
+<script type="text/javascript">
+function lock(){
+	jQuery.ajax({
+		url: 'lock',
+		type: 'GET',
+		dataType: 'JSON',
+		success: function(data){
+			alert(data);
+		}
+	});
+}
+function flush(){
+	jQuery.ajax({
+		url: 'flush',
+		type: 'GET',
+		dataType: 'JSON',
+		success: function(data){
+			alert(data);
+		}
+	});
+}
+</script>
+</head>
+<body>
+	<button onclick="lock()">Lock</button>
+	<button onclick="flush()">Flush</button>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        function bodyOnLoad() {		
+            var gui = require('nw.gui'); 			
+            var win = gui.Window.get();			
+			require('./server.js');
+			window.location.assign('http://localhost:1357/');
+        }
+    </script>
+</head>
+
+<body onload="bodyOnLoad()">
+	<div id="content">
+	
+	</div>
+</body>
+
+</html>
