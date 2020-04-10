@@ -59,6 +59,26 @@ app.get('/authenticate',function(req,res){
 	
 });
 
+app.get('/restart',function(req,res){
+	logger.debug('changeState Hit');
+	logger.debug('change State request from '+req.connection.remoteAddress);
+	var dataToSend = {
+		'status' : 'fail',
+		'msg' : 'you are not authenticated'
+	}
+	if(true){
+		ChangeState.restart(res);
+		logger.debug('sytem restart by '+req.connection.remoteAddress);
+	}else{
+		res.send(dataToSend);
+		logger.debug('sytem locked failure by '+req.connection.remoteAddress);
+		return;
+	}
+	dataToSend = {status:'success',msg:'Your system will be restarted'};
+	res.send(dataToSend);
+  // output is in stdout
+});
+
 app.get('/lock',function(req,res){
 	logger.debug('changeState Hit');
 	logger.debug('change State request from '+req.connection.remoteAddress);
