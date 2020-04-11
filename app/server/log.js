@@ -7,7 +7,7 @@ existsFile = fs.existsSync(logFile);
 
 if (!existsFolder) {
 	console.log("Creating log folder " + appFolder);
-	fs.mkdir(appFolder);
+	fs.mkdirSync(appFolder);
 }
 
 if (!existsFile) {
