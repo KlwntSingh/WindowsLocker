@@ -1,0 +1,23 @@
+{
+  "name": "windowslocker",
+  "version": "1.0.0",
+  "description": "Nodejs server will be running on windows and when hit at particular url windows can be shutdown, put to sleep or hibernate etc\r New functinality of changing ip address is added.\r Now no need to manually type ip address in browser of mobile because now you can you use QR CODE reader which will give you the ip address.",
+  "main": "add_app_as_service.js",
+  "dependencies": {
+    "node-windows": "^1.0.0-beta.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KlwntSingh/WindowsLocker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KlwntSingh/WindowsLocker/issues"
+  },
+  "homepage": "https://github.com/KlwntSingh/WindowsLocker#readme"
+}
