@@ -9,8 +9,7 @@ var changeState = {
 			'toDynamic' : function(){
 						console.log();
 						exec('netsh int ipv4 set address name="Wi-Fi" source="dhcp"', function (error, stdout, stderr) {
-									if(error)
-									{
+									if(error){
 										logger.debug(error);
 										var dataToSend = {
 											'status' : 'fail',
@@ -21,13 +20,7 @@ var changeState = {
 			},
 			'getCurrentIP' : function(){
 							var ifacess = osprop.networkInterfaces();
-							var ip = {ip:'127.0.0.1'};
-							if(!!ifacess['Ethernet']){
-								ip = util.getIPFromInterface(ifacess['Ethernet']);
-							}else if(!!ifacess['Wi-Fi']){
-								ip = util.getIPFromInterface(ifacess['Wi-Fi']);
-							}
-							return ip;
+							return ifacess;
 			}
 	},
 	'linux' : {

@@ -89,9 +89,7 @@ app.get('/lock',function(req,res){
 	if(true){
 		ChangeState.lock(res);
 		logger.debug('sytem locked by '+req.connection.remoteAddress);
-	}
-	else 
-	{
+	}else{
 		res.send(dataToSend);
 		logger.debug('sytem locked failure by '+req.connection.remoteAddress);
 		return;
@@ -112,9 +110,7 @@ app.get('/flush',function(req,res){
 		console.log("here");
 		networking.toDynamic(res);
 		logger.debug('IP address changed by '+req.connection.remoteAddress);
-	}
-	else 
-	{
+	}else{
 		res.send(dataToSend);
 		logger.debug('IP address change failure by '+req.connection.remoteAddress);
 		return;
